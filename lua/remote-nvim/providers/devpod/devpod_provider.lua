@@ -156,12 +156,11 @@ end
 
 function DevpodProvider:_handle_provider_setup()
   if self._devpod_provider then
-    local is_windows = vim.fn.has("win32");
     local co = coroutine.running()
     ---@type string[]
     local stdout_lines = {}
 
-    if is_windows then
+    if utils.is_windows then
       require("plenary.job")
         :new({
           command = remote_nvim.config.devpod.binary,
