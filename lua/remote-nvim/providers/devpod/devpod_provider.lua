@@ -167,10 +167,12 @@ function DevpodProvider:_handle_provider_setup()
           command = remote_nvim.config.devpod.binary,
           args = { "provider", "list", "--output", "json" },
           on_exit = function(j, _)
-            stdout_lines = j:result()
-            if co ~= nil then
-              coroutine.resume(co)
-            end
+            vim.schedule(function ()
+              stdout_lines = j:result()
+              if co ~= nil then
+                coroutine.resume(co)
+              end
+            end)
           end,
         })
         :start()
