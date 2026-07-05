@@ -166,7 +166,7 @@ function DevpodProvider:_handle_provider_setup()
           command = remote_nvim.config.devpod.binary,
           args = { "provider", "list", "--output", "json" },
           on_exit = function(j, _)
-            vim.schedule(function ()
+            vim.schedule(function()
               stdout_lines = j:result()
               if co ~= nil then
                 coroutine.resume(co)
@@ -187,7 +187,8 @@ function DevpodProvider:_handle_provider_setup()
       coroutine.yield()
     end
 
-    local provider_list_output = vim.json.decode(vim.tbl_isempty(stdout_lines) and "{}" or table.concat(stdout_lines, "\n"))
+    local provider_list_output =
+      vim.json.decode(vim.tbl_isempty(stdout_lines) and "{}" or table.concat(stdout_lines, "\n"))
 
     -- If the provider does not exist, let's create it
     if not vim.tbl_contains(vim.tbl_keys(provider_list_output), self._devpod_provider) then
